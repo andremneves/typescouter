@@ -128,7 +128,7 @@ BOOL alarme_sensor = YES;
             NSDictionary *jsonDict = [sgvArray objectAtIndex:i];
             NSDictionary *nextDict = [sgvArray objectAtIndex:i+1];
             
-            id temp = [jsonDict objectForKey:@"rawbg"];
+            id temp = [jsonDict objectForKey:@"sgv"];
             NSString *sgv;
             if ([temp isKindOfClass:[NSString class]])
             {
@@ -139,7 +139,7 @@ BOOL alarme_sensor = YES;
                 sgv = [temp stringValue];
             }
             
-            NSString *nextSgv = [nextDict objectForKey:@"rawbg"];
+            NSString *nextSgv = [nextDict objectForKey:@"sgv"];
             
             int sgvInt = [sgv intValue];
             int nextSgvInt = [nextSgv intValue];

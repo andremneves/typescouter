@@ -104,16 +104,28 @@ int Contador = 0;
     _above.text = [NSString stringWithFormat:@"%.1f", up];
     _below.text = [NSString stringWithFormat:@"%.1f", down];
     
-    if (((Media1 > minimo1) && (Media1 < maximo1)) && (target > 70)){
+    if ((Media1 > minimo1) && (Media1 < maximo1)){
         _congrats.backgroundColor = [UIColor colorWithRed:(7/255.0) green:(197/255.0) blue:(172/255.0) alpha:1]; // verde claro
         _congrats.textColor = [UIColor colorWithRed:(255/255.0) green:(255/255.0) blue:(255/255.0) alpha:1]; // branco
         //_congrats.text = @"CONGRATULATIONS\n\nyour glucose is under control in the last 100 measurements\n:-)";
-        _congrats.text = [NSString stringWithFormat:@"CONGRATULATIONS\n\nyour glucose is under control in the last %.0d measurements\n:-)", Contador];
+        _congrats.text = [NSString stringWithFormat:@"CONGRATULATIONS\n\nyour glucose average is in the goal in the last %.0d measurements\n:-)", Contador];
     } else {
         _congrats.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(121/255.0) blue:(121/255.0) alpha:1]; // vermelho
         _congrats.textColor = [UIColor colorWithRed:(255/255.0) green:(255/255.0) blue:(255/255.0) alpha:1]; // branco
         //_congrats.text = @"ATTENTION\n\nyour glucose is out of control in the last 100 measurements\n::(";
-        _congrats.text = [NSString stringWithFormat:@"ATTENTION\n\nyour glucose is out of control in the last %.0d measurements\n::(", Contador];
+        _congrats.text = [NSString stringWithFormat:@"ATTENTION\n\nyour glucose average is out of your interval in the last %.0d measurements\n::(", Contador];
+    }
+    if (down > 20){
+        _congrats.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(121/255.0) blue:(121/255.0) alpha:1]; // vermelho
+        _congrats.textColor = [UIColor colorWithRed:(255/255.0) green:(255/255.0) blue:(255/255.0) alpha:1]; // branco
+        //_congrats.text = @"CONGRATULATIONS\n\nyour glucose is under control in the last 100 measurements\n:-)";
+        _congrats.text = [NSString stringWithFormat:@"ATTENTION\n\nmore than 20%% of your glucoses are below the min in the last %.0d measurements\n:-)", Contador];
+    }
+    if (up > 30){
+        _congrats.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(121/255.0) blue:(121/255.0) alpha:1]; // vermelho
+        _congrats.textColor = [UIColor colorWithRed:(255/255.0) green:(255/255.0) blue:(255/255.0) alpha:1]; // branco
+        //_congrats.text = @"CONGRATULATIONS\n\nyour glucose is under control in the last 100 measurements\n:-)";
+        _congrats.text = [NSString stringWithFormat:@"ATTENTION\n\nmore than 30%% of your glucoses are above the max in the last %.0d measurements\n:-)", Contador];
     }
 }
 
@@ -150,16 +162,28 @@ int Contador = 0;
     _above.text = [NSString stringWithFormat:@"%.1f", up];
     _below.text = [NSString stringWithFormat:@"%.1f", down];
     
-    if (((Media1 > minimo1) && (Media1 < maximo1)) && (target > 70)){
+    if ((Media1 > minimo1) && (Media1 < maximo1)){
         _congrats.backgroundColor = [UIColor colorWithRed:(7/255.0) green:(197/255.0) blue:(172/255.0) alpha:1]; // verde claro
         _congrats.textColor = [UIColor colorWithRed:(255/255.0) green:(255/255.0) blue:(255/255.0) alpha:1]; // branco
-        //_congrats.text = @"CONGRATULATIONS\n\nyour glucose is under control in the last 1000 measurements\n:-)";
-        _congrats.text = [NSString stringWithFormat:@"CONGRATULATIONS\n\nyour glucose is under control in the last %.0d measurements\n:-)", Contador];
+        //_congrats.text = @"CONGRATULATIONS\n\nyour glucose is under control in the last 100 measurements\n:-)";
+        _congrats.text = [NSString stringWithFormat:@"CONGRATULATIONS\n\nyour glucose average is in the goal in the last %.0d measurements\n:-)", Contador];
     } else {
         _congrats.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(121/255.0) blue:(121/255.0) alpha:1]; // vermelho
         _congrats.textColor = [UIColor colorWithRed:(255/255.0) green:(255/255.0) blue:(255/255.0) alpha:1]; // branco
-        //_congrats.text = @"ATTENTION\n\nyour glucose is out of control in the last 1000 measurements\n::(";
-        _congrats.text = [NSString stringWithFormat:@"ATTENTION\n\nyour glucose is out of control in the last %.0d measurements\n::(", Contador];
+        //_congrats.text = @"ATTENTION\n\nyour glucose is out of control in the last 100 measurements\n::(";
+        _congrats.text = [NSString stringWithFormat:@"ATTENTION\n\nyour glucose average is out of your interval in the last %.0d measurements\n::(", Contador];
+    }
+    if (down > 20){
+        _congrats.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(121/255.0) blue:(121/255.0) alpha:1]; // vermelho
+        _congrats.textColor = [UIColor colorWithRed:(255/255.0) green:(255/255.0) blue:(255/255.0) alpha:1]; // branco
+        //_congrats.text = @"CONGRATULATIONS\n\nyour glucose is under control in the last 100 measurements\n:-)";
+        _congrats.text = [NSString stringWithFormat:@"ATTENTION\n\nmore than 20%% of your glucoses are below the min in the last %.0d measurements\n:-)", Contador];
+    }
+    if (up > 30){
+        _congrats.backgroundColor = [UIColor colorWithRed:(255/255.0) green:(121/255.0) blue:(121/255.0) alpha:1]; // vermelho
+        _congrats.textColor = [UIColor colorWithRed:(255/255.0) green:(255/255.0) blue:(255/255.0) alpha:1]; // branco
+        //_congrats.text = @"CONGRATULATIONS\n\nyour glucose is under control in the last 100 measurements\n:-)";
+        _congrats.text = [NSString stringWithFormat:@"ATTENTION\n\nmore than 30%% of your glucoses are above the max in the last %.0d measurements\n:-)", Contador];
     }
 }
 
@@ -237,7 +261,7 @@ int Contador = 0;
             NSDictionary *jsonDict1 = [sgvArray objectAtIndex:i];
             NSDictionary *nextDict1 = [sgvArray objectAtIndex:i+1];
             
-            id temp = [jsonDict1 objectForKey:@"rawbg"];
+            id temp = [jsonDict1 objectForKey:@"sgv"];
             NSString *sgv;
             if ([temp isKindOfClass:[NSString class]])
             {
@@ -248,7 +272,7 @@ int Contador = 0;
                 sgv = [temp stringValue];
             }
             
-            NSString *nextSgv = [nextDict1 objectForKey:@"rawbg"];
+            NSString *nextSgv = [nextDict1 objectForKey:@"sgv"];
             
             int sgvInt = [sgv intValue];
             int nextSgvInt = [nextSgv intValue];
