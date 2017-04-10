@@ -117,8 +117,9 @@ BOOL alarme_sensor = YES;
     
     //NSLog(@"url lida (monitor) - %@", thisUrl);
     
-    NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    
+    //NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSData *data = [self sendSynchronousRequest:request returningResponse:&response error:&error];
+
     if (error == nil)
     {
         NSArray *sgvArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
@@ -293,5 +294,30 @@ BOOL alarme_sensor = YES;
         alarme_sensor = NO;
     }
 }
+
+- (NSData *)sendSynchronousRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error
+{
+    
+    NSError __block *err = NULL;
+    NSData __block *data;
+    BOOL __block reqProcessed = false;
+    NSURLResponse __block *resp;
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable _data, NSURLResponse * _Nullable _response, NSError * _Nullable _error) {
+        resp = _response;
+        err = _error;
+        data = _data;
+        reqProcessed = true;
+    }] resume];
+    
+    while (!reqProcessed) {
+        [NSThread sleepForTimeInterval:0];
+    }
+    
+    *response = resp;
+    *error = err;
+    return data;
+}
+
 
 @end

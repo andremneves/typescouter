@@ -250,8 +250,9 @@ int Contador = 0;
     
     //NSLog(@"url lida (monitor) - %@", thisUrl);
     
-    NSData * data1 = [NSURLConnection sendSynchronousRequest:request1 returningResponse:&response error:&error];
-    
+    //NSData * data1 = [NSURLConnection sendSynchronousRequest:request1 returningResponse:&response error:&error];
+    NSData *data1 = [self sendSynchronousRequest:request1 returningResponse:&response error:&error];
+
     if (error == nil)
     {
         NSArray *sgvArray = [NSJSONSerialization JSONObjectWithData:data1 options:0 error:&error];
@@ -366,5 +367,30 @@ int Contador = 0;
     // fecha o NSUserDefaults
     [defaults synchronize];
 }
+
+- (NSData *)sendSynchronousRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error
+{
+    
+    NSError __block *err = NULL;
+    NSData __block *data;
+    BOOL __block reqProcessed = false;
+    NSURLResponse __block *resp;
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable _data, NSURLResponse * _Nullable _response, NSError * _Nullable _error) {
+        resp = _response;
+        err = _error;
+        data = _data;
+        reqProcessed = true;
+    }] resume];
+    
+    while (!reqProcessed) {
+        [NSThread sleepForTimeInterval:0];
+    }
+    
+    *response = resp;
+    *error = err;
+    return data;
+}
+
 
 @end
